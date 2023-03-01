@@ -16,7 +16,6 @@ import java.util.List;
 @Service
 public class PumlConverterService {
 
-
     public String convertSVGFromText(String text) throws IOException {
 
         SourceStringReader stringReader = new SourceStringReader(text);
@@ -42,7 +41,6 @@ public class PumlConverterService {
             .get(0)
             .getPngFile();
     }
-
 
     private FileFormatOption getPNGFormat() {
         return new FileFormatOption(FileFormat.PNG);

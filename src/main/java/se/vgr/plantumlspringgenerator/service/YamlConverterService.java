@@ -17,6 +17,10 @@ import java.util.List;
 public class YamlConverterService {
 
     public String convertSVGFromText(String text) throws IOException {
+        if(checkIfContainsHyphen(text)){
+            text = removeHyphen(text);
+        }
+
         if (checkIfValidYaml(text)) {
             text = addAtSignToText(text);
         }
@@ -51,6 +55,14 @@ public class YamlConverterService {
         return sb.toString();
     }
 
+    private String removeHyphen(String text){
+        if (text.startsWith("---")) {
+            System.out.println("Removed hyphen");
+            return text.substring(3);
+        }
+        return text;
+    }
+
     /**
      * Yet to be implemented
      * @return
@@ -74,6 +86,12 @@ public class YamlConverterService {
         String lastRow = rows[rows.length - 1];
         return !text.startsWith("@startyaml") || !lastRow.startsWith("@endyaml");
     }
+
+
+    public boolean checkIfContainsHyphen(String text){
+        return text.startsWith("---");
+    }
+
 
     private FileFormatOption getPNGFormat() {
         return new FileFormatOption(FileFormat.PNG);
