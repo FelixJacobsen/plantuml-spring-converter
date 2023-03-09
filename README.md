@@ -1,18 +1,16 @@
-# PlantUML Converter
+# PlantUML Converter 1.0.0
 
-PlantUML Converter är en tjänst för konvertering av YAML/PUML text till UML diagram i form av .svg
-Inmatning av data kan ske via en post klient eller via gränssnittet. Anropen går till 
+PlantUML Converter är en tjänst för konvertering av YAML/PUML text till UML diagram i form av .svg. Inmatning av data kan ske via en post klient eller via gränssnittet.
 
 
 ## Endpoints
-<details>
-<summary>YAML</summary>
 
+## Post
 ```
-POST: http://localhost:8080/api/yaml/text
+http://localhost:8080/api/yaml/text
 ```
 
-Exempel yaml request
+### Exempel yaml request
 ```
 doe: "a deer, a female deer"
 ray: "a drop of golden sun"
@@ -32,15 +30,14 @@ xmas-fifth-day:
 		count: 1
 		location: "a pear tree"
 	turtle-doves: two
-```
-
-Response
 
 ```
-![img.png](![image](https://user-images.githubusercontent.com/89127725/223968201-7cabea39-d0ac-42d3-b05b-af3ff9548139.png)
-)
 
-![Uploading image.png…]()
+### Response
+
+```
+![readme-puml-image](https://user-images.githubusercontent.com/89127725/224014790-d2242426-d3b6-45d4-8d59-458d67b6055e.png)
+
 
 ```
 
@@ -48,10 +45,9 @@ Response
 
 ---
 
-<details>
-<summary>PUML</summary>
+
 POST -->  http://localhost:8080/api/puml/text
-<details>
+
 
 
 
