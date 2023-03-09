@@ -16,7 +16,10 @@ import java.util.List;
 @Service
 public class PumlConverterService {
 
-    public String convertSVGFromText(String text) throws IOException {
+    public String convertToSVGFromText(String text) throws IOException {
+        // TODO
+        // Add some validation if the text is valid puml syntax
+        // Else handle the exception
 
         SourceStringReader stringReader = new SourceStringReader(text);
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -29,15 +32,17 @@ public class PumlConverterService {
         return new String(bos.toByteArray(), StandardCharsets.UTF_8);
     }
 
+    /**
+     * Yet to be implemented
+     */
+
     public File generatePNGFromFile() throws IOException {
-        File theFile = new File("yaml.txt");
+        File theFile = new File("");
         SourceFileReader fileReader = new SourceFileReader(theFile);
-
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
         fileReader.setFileFormatOption(getPNGFormat());
-        List<GeneratedImage> svgs = fileReader.getGeneratedImages();
+        List<GeneratedImage> svg = fileReader.getGeneratedImages();
 
-        return svgs
+        return svg
             .get(0)
             .getPngFile();
     }
@@ -48,11 +53,5 @@ public class PumlConverterService {
 
     private FileFormatOption getSVGFormat() {
         return new FileFormatOption(FileFormat.SVG);
-    }
-
-    public boolean checkIfValidPuml(String text) {
-        String[] rows = text.split("\n");
-        String lastRow = rows[rows.length - 1];
-        return !text.startsWith("@startpuml") || !lastRow.startsWith("@endpuml");
     }
 }

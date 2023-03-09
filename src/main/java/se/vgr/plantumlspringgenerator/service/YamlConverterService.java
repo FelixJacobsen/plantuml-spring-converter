@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class YamlConverterService {
 
-    public String convertSVGFromText(String text) throws IOException {
+    public String convertToSVGFromText(String text) throws IOException {
         if(checkIfContainsHyphen(text)){
             text = removeHyphen(text);
         }
@@ -34,6 +34,20 @@ public class YamlConverterService {
             return "There was an error parsing to plantuml";
         }
         return new String(bos.toByteArray(), StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Yet to be implemented
+     */
+    public File convertToPngFromFile() throws IOException {
+        File theFile = new File("");
+        SourceFileReader fileReader = new SourceFileReader(theFile);
+        fileReader.setFileFormatOption(getPNGFormat());
+        List<GeneratedImage> svg = fileReader.getGeneratedImages();
+
+        return svg
+            .get(0)
+            .getPngFile();
     }
 
     private String addAtSignToText(String text) {
@@ -63,35 +77,15 @@ public class YamlConverterService {
         return text;
     }
 
-    /**
-     * Yet to be implemented
-     * @return
-     * @throws IOException
-     */
-    public File generatePNGFromFile() throws IOException {
-        File theFile = new File("yaml.txt");
-        SourceFileReader fileReader = new SourceFileReader(theFile);
-
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        fileReader.setFileFormatOption(getPNGFormat());
-        List<GeneratedImage> svgs = fileReader.getGeneratedImages();
-
-        return svgs
-            .get(0)
-            .getPngFile();
-    }
-
-    public boolean checkIfValidYaml(String text) {
+    private boolean checkIfValidYaml(String text) {
         String[] rows = text.split("\n");
         String lastRow = rows[rows.length - 1];
         return !text.startsWith("@startyaml") || !lastRow.startsWith("@endyaml");
     }
 
-
-    public boolean checkIfContainsHyphen(String text){
+    private boolean checkIfContainsHyphen(String text){
         return text.startsWith("---");
     }
-
 
     private FileFormatOption getPNGFormat() {
         return new FileFormatOption(FileFormat.PNG);

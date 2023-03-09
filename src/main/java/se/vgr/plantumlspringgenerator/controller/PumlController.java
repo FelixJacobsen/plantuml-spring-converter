@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,7 +17,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/puml")
-@CrossOrigin(origins = "http://localhost:30000")
+@CrossOrigin(origins = "http://localhost:3000")
 public class PumlController {
 
     private final PumlConverterService converter;
@@ -39,9 +40,10 @@ public class PumlController {
         return new ResponseEntity<>(file, HttpStatus.OK);
     }
 
-    @GetMapping("/text")
+    @CrossOrigin
+    @PostMapping("/text")
     public ResponseEntity<String> generateSVGFromText(@RequestBody String text) throws IOException {
-        String test = converter.convertSVGFromText(text);
+        String test = converter.convertToSVGFromText(text);
         if (test.contains("There was an error creating diagram, ensure that the input is correct puml data")) {
             return new ResponseEntity<>(test, HttpStatus.BAD_REQUEST);
         }

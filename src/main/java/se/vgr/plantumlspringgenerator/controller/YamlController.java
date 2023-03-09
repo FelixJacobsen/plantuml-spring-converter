@@ -17,7 +17,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/yaml")
-@CrossOrigin(origins = "http://localhost:30000")
+@CrossOrigin(origins = "http://localhost:3000")
 public class YamlController {
 
     private final YamlConverterService converter;
@@ -36,19 +36,17 @@ public class YamlController {
     @GetMapping("/file")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<File> generatePNGFromFile() throws IOException {
-        File file = converter.generatePNGFromFile();
+        File file = converter.convertToPngFromFile();
         return new ResponseEntity<>(file, HttpStatus.OK);
     }
 
     @CrossOrigin
     @PostMapping("/text")
     public ResponseEntity<String> generateSVGFromText(@RequestBody String text) throws IOException {
-        String test = converter.convertSVGFromText(text);
+        String test = converter.convertToSVGFromText(text);
         if (test.contains("There was an error parsing to plantuml")) {
             return new ResponseEntity<>(test, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        System.out.println("Handled");
         return new ResponseEntity<>(test, HttpStatus.OK);
     }
-
 }
